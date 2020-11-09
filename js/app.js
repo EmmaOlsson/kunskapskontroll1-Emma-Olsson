@@ -1,3 +1,26 @@
+/* 
+1. En knapp som återställer allt till originalutseendet
+- Knapp längst ner
+2. Alla ändringar som du har gjort ska ändras tillbaka
+3. Byt ut minst ett foto
+    -Byter ut soldout till hoodie-ocean som jag dragit ner opacitet på i photshop
+4. Ändra bakgrundsfärg på minst ett element
+- Ändra bakgrundsfärg för produkterna
+5. Ändra text på minst ett element
+- Ändrat text på buy-knappar
+6. Ändra färg på minst en knapp
+- Ändrat färg beroende på added eller sold out
+7. Ta bort minst 1 element (Måste läggas till igen när man trycker på återställningsknappen)
+8. Lägg till en lista var du vill med synlig border för varje li element 
+-   
+(Måste tas bort när man trycker på återställningsknappen) 
+*/
+
+
+let html =document.querySelector('html')
+
+console.log(html)
+
 
 /////////////////
 //* VARIABLES *//
@@ -9,20 +32,17 @@ let btns = document.querySelectorAll('button');
 // Creating variable for all products
 let products = document.querySelectorAll('article figure');
 
+
 // Creating a variable for a new a-element
 let cartText = document.createElement('a')
 cartText.setAttribute('class', 'cart-text-remove');
 
 
 
+
 ////////////////////
 //* RESET BUTTON *//
 ////////////////////
-
-
-////////////////////////////////////////////
-// Creating and styling the reset-button //
-///////////////////////////////////////////
 
 let resetBtn = document.createElement('button');
 
@@ -35,7 +55,7 @@ footer.insertAdjacentElement('afterend', resetBtn);
 // Adds the 'RESET ALL'-text to the reset button
 resetBtn.innerText = 'Reset all';
 
-// Adds the resetAll-function to addEventListener
+// Lägger till resetAll-funktion till addEventListener
 resetBtn.addEventListener('click', resetAll)
 
 // Changes some styles for the resetBtn
@@ -52,37 +72,45 @@ resetBtn.style.padding = '1rem 0';
 resetBtn.style.boxShadow = '.2rem .5rem .5rem darkgrey'
 
 
-
 //////////////////////
 //* RESET FUNCTION *//
 //////////////////////
 
-// Function for the "reset.addEventListener"
-function resetAll() {
+// Funktionen som vi använder oss av i "reset.addEventListener"
+function resetAll(){
 
     // Sets the products background to default color
-    defaultBackgroundFigure();
+    let products = document.querySelectorAll('article figure');
+    for (let product of products) {
+        product.style.backgroundColor = 'rgb(244, 182, 10)';
+    };
+
+    // Sets the h2 to default text
+    let firstBtn = btns[0]
+    firstBtn.innerText = 'buy';
 
     // Sets the button background to default color
-    defaultProductBtns()
+    let productBtns = document.querySelectorAll('article button');
+    for (let blackBtns of productBtns) {
+    blackBtns.style.backgroundColor = '#000';
+    blackBtns.innerText = 'buy';
+    blackBtns.style.textTransform = 'none'
+    blackBtns.style.fontSize = '0.8333rem';
+    blackBtns.style.transform = 'none'
+    }
 
     // Sets the product image to default
     changeImgToDefault();
-
-    // Resets heart-icon
-    resetHeart();
 
     // Removes cart text
     removeCart();
 }
 
-
-
 ////////////////////
 //* FIRST BUTTON *//
 ////////////////////
 
-// Selecting the index for firstBtn
+// Sätt eventListener för första knappen
 let firstBtn = btns[0];
 
 firstBtn.addEventListener('click', 
@@ -101,7 +129,7 @@ firstBtn.addEventListener('mouseover',
 
 firstBtn.addEventListener('mouseleave',
     function(event) {
-        defaultProductBtns();
+        defaultBlackButton();
     }
 )
 
@@ -109,7 +137,6 @@ firstBtn.addEventListener('mouseleave',
 //* SECOND BUTTON *//
 /////////////////////
 
-// Selecting the index for secondBtn
 let secondBtn = btns[1];
 
 secondBtn.addEventListener('click', 
@@ -128,16 +155,22 @@ secondBtn.addEventListener('mouseover',
 
 secondBtn.addEventListener('mouseleave',
     function(event) {
-        defaultProductBtns();
+        defaultBlackButton();
     }
 )
 
+
+/* secondBtn.addEventListener('mouseover', 
+    function(event){
+        changeToSoldOut();
+        products[1].style.backgroundColor = '#a82b24af';
+    }
+); */
 
 ////////////////////
 //* THIRD BUTTON *//
 ////////////////////
 
-// Selecting the index for thirdBtn
 let thirdBtn = btns[2];
 
 thirdBtn.addEventListener('mouseover', 
@@ -149,32 +182,11 @@ thirdBtn.addEventListener('mouseover',
 );
 
 
-/////////////////////
-//* PRODUCT-LIST *//
-////////////////////
-
-// Creating a variable and element for "Product" in navigation
-let navigation = document.querySelectorAll('nav a');
-let navProducts = navigation[1];
-
-navProducts.addEventListener('mouseover', 
-    function(event){
-        showProducts();
-    }
-);
-
-navProducts.addEventListener('mouseleave', 
-    function(event){
-        hideProducts();
-    }
-);
-
-
 /////////////////
 //* FUNCTIONS *//
 /////////////////
 
-// Changes the third product button to red
+
 function changeToSoldOut(){
     event.target.innerText = 'sold out';
     event.target.style.textTransform = 'uppercase'
@@ -183,7 +195,7 @@ function changeToSoldOut(){
     event.target.style.backgroundColor = '#c93f26';
 }
 
-// Changes the first and second product button to green
+
 function changeToAddToCart(){
     event.target.style.backgroundColor = '#72b584';
     event.target.innerText = 'Add to cart';
@@ -191,10 +203,11 @@ function changeToAddToCart(){
     event.target.style.fontSize = '1rem';
 }
 
-// When clicking 'Add to cart', text box shows up next to cart icon and count items added
+
+
+// When clicking on 'Add to cart', text box shows up next to cart icon and count items added
 function addToCartText() {
     let itemText = '';
-
     if (count <= 1) {
         itemText = 'item';
     } else {
@@ -209,7 +222,7 @@ function addToCartText() {
     menuElements[2].insertAdjacentElement('beforeend', cartText)
 }
 
-// Functions that counts clicks
+// count-click function 
 let count = 1;
 let countClickText = document.createElement('a');
 function countClick() {
@@ -217,166 +230,160 @@ function countClick() {
         count++;
         countClickText.innerHTML = count;
     }
+
 }
 
-// Changes the third product image to a faded version
+
+function defaultBlackButton() {
+    event.target.style.backgroundColor = '#222';
+    event.target.innerText = 'Buy';
+
+}
+
 function changeImgToFaded() {
     let blueHoodie = document.querySelector('.art-3 figure img')
     blueHoodie.src = 'img/hoodie-ocean-faded.png'
 }
 
 
-// Adding a heart after h2-element in products
-function addEmptyHeart() {
+// Adding a heart after 
+
+
+function addHeart() {
     let cartIcon = document.querySelector('nav img');
     let heartIcon = document.createElement('img');
     heartIcon.src = 'img/empty-heart.png';
     heartIcon.style.height = '1.75rem';
     cartIcon.insertAdjacentElement('beforebegin', heartIcon);
+
 }
-addEmptyHeart();
+addHeart();
+
+
 
 // Creating variable for the h2 in article
 let productName = document.querySelectorAll('article h2');
 
-// Loop that adds a heart in every product-article
 for (let i = 0; i < productName.length; i++) {
 
     let likeButton = document.createElement('img');
  
     productName[i].insertAdjacentElement('beforeend', likeButton)
 
-    // Styling likeButton
     likeButton.src = 'img/empty-heart.png';
     likeButton.style.height = '2rem'
     likeButton.style.width = '2rem'
     likeButton.style.marginLeft = '5rem';
     likeButton.style.marginTop = '.4rem';
 
+
     function fillHeart() {
         event.target.onclick = function () {
             count++;
             countClickText.innerHTML = count;
         }
+
         if (count % 2 === 0) {
             likeButton.src = 'img/empty-heart.png'
         } else {
-            likeButton.src = 'img/filled-heart.png';
+                    likeButton.src = 'img/filled-heart.png';
         }
 
         console.log(count)
-        
-    }
-
-    // Changes to red heart
-    likeButton.addEventListener('click', fillHeart);
-
-    // Adding a class to likeButton
-    likeButton.setAttribute('class', 'like-button')
-}
-
-
-
-
-/////////////////////////////////////////////////////
-// Creating a category-list of different products //
-/////////////////////////////////////////////////////
-
-let category = ['Accessories', 'Hoodies', 'Pants', 'Shoes', 'T-Shirts'];
-
-
-function showProducts() {
-    let ul = document.createElement('ul');
-    ul.setAttribute('id', 'cart-ul');
-
-    // Styles the ul
-    ul.style.listStyle = 'none';
-    ul.style.textAlign = 'center';
-    ul.style.padding = '1rem';
-    ul.style.boxShadow = '.2rem .2rem .5rem darkgrey'
-    ul.style.background = 'rgba(255, 229, 158, 0.4)';
-    ul.style.width = '58.5rem';
-    ul.style.margin = '0 auto';
-    ul.style.lineHeight = '3rem';
-
-    // Loops through the catergory length
-    for (let i = 0; i < category.length; i++) {
-        let li = document.createElement('li');
- 
-        // Styles the li
-        li.style.border = 'solid .1rem rgba(255, 250, 238, 0.39)';
-        li.style.boxShadow = '.2rem .2rem .5rem lightgrey'
-        li.style.margin = '1rem';
-        li.style.background = 'rgba(255, 229, 158, 0.8)';
-        li.style.color = 'rgba(255, 250, 238, 0.9)';
-        li.style.textShadow = '.2rem .2rem .5rem darkgrey'
-        li.style.fontSize = '2rem';
-        li.style.fontWeight = '600';
-        li.style.textTransform = 'uppercase';
-
-        ul.appendChild(li);
-    }
     
-    // Creates li-elements out of the ul-children
-    let li = ul.children;
-
-    // Giving the li-elements a value from category-array through a loop
-    for (let i = 0; i < category.length; i++) {
-        li[i].innerText = category[i];
     }
 
-    // Puts the ul-element before the main-element
-    let main = document.querySelector('main');
-    main.insertAdjacentElement('beforebegin', ul);
+
+    
+
+    likeButton.addEventListener('click', 
+    function (event) {
+    fillHeart();
+
+});
 }
 
 
-/////////////////////////
-//* DEFAULT FUNCTIONS *//
-/////////////////////////
 
-// Changes back to default hoodie-img
+/* btn.addEventListener('click',
+
+    function(event){
+        //firstProduct.style.backgroundColor = 'lightpink';
+
+        // Toggle
+        firstProduct.classList.toggle('bg-yellow');
+        firstProduct.classList.toggle('text-large');
+    }
+
+);
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* default functions */
+
 function changeImgToDefault() {
     let blueHoodie = document.querySelector('.art-3 figure img')
     blueHoodie.src = 'img/hoodie-ocean.png';
 }
 
+
+let productBtns = document.querySelectorAll('article button');
+for (let blackBtns of productBtns) {
+blackBtns.style.backgroundColor = '#000';
+blackBtns.innerText = 'buy';
+blackBtns.style.textTransform = 'none'
+blackBtns.style.fontSize = '0.8333rem';
+blackBtns.style.transform = 'none'
+}
+
+
+
 // Removes the green cart-element
 function removeCart() {
-    let cartText = document.createElement('a')
-    cartText.setAttribute('class', 'cart-text-remove');
-    let removeCart = document.querySelector('.cart-text-remove')
-    removeCart.remove();
+let cartText = document.createElement('a')
+cartText.setAttribute('class', 'cart-text-remove');
+
+let removeCart = document.querySelector('.cart-text-remove')
+
+removeCart.remove();
+
 }
 
-// Sets the figure-background to default
-function defaultBackgroundFigure() {
-    let products = document.querySelectorAll('article figure');
-    for (let product of products) {
-        product.style.backgroundColor = 'rgb(244, 182, 10)';
-    };
-}
+//////////////////// Den här var bra!
 
-// Buttons default color of black
-function defaultProductBtns() {
-    let productBtns = document.querySelectorAll('article button');
-    for (let blackBtns of productBtns) {
-        blackBtns.style.backgroundColor = '#000';
-        blackBtns.innerText = 'Buy';
-        blackBtns.style.textTransform = 'UPPERCASE'
-        blackBtns.style.fontSize = '0.8333rem';
-        blackBtns.style.transform = 'none'
-    }
-}
+/* let greyColor = '(rgb(72, 72, 74))';48484a
+let redColor = '(rgb(168, 43, 36))';a82b24
+let blueColor = '(rgb(43, 82, 127))'; #2b527f */
 
-// Removes the product category-list
-function hideProducts () {
-    let ul = document.querySelector('ul')
-    ul.remove();
-    }
-    
-// Changes the red heart to the emptyHeart-img
-function resetHeart() {
-    let resetHeartButton = document.querySelector('.like-button');
-    resetHeartButton.src = 'img/empty-heart.png';
-}
+// Selects the background of the products
+/* let productsBackground = document.querySelectorAll('article figure');
+
+// Array with hex-colors of grey, red and blue
+let colors = ['#48484aa8', '#a82b24af', ' #2b527fad']
+
+// Function that loops the colors-array
+function changeBackgroundColor() {
+    for (let i = 0; i < productsBackground.length; i++) {
+        productsBackground[i].style.backgroundColor = colors[i];
+     }
+} */
+/////////////////
