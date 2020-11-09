@@ -256,20 +256,61 @@ let productName = document.querySelectorAll('article h2');
 
 for (let i = 0; i < productName.length; i++) {
 
-    let emptyHeart = document.createElement('img');
+    let likeButton = document.createElement('img');
  
-    productName[i].insertAdjacentElement('beforeend', emptyHeart)
+    productName[i].insertAdjacentElement('beforeend', likeButton)
 
-    emptyHeart.src = 'img/empty-heart.png';
-    emptyHeart.style.height = '2rem'
-    emptyHeart.style.width = '2rem'
-    emptyHeart.style.marginLeft = '5rem';
-    emptyHeart.style.marginTop = '.4rem';
-}
+    likeButton.src = 'img/empty-heart.png';
+    likeButton.style.height = '2rem'
+    likeButton.style.width = '2rem'
+    likeButton.style.marginLeft = '5rem';
+    likeButton.style.marginTop = '.4rem';
 
-function fillHeart () {
-    emptyHeart.src = 'img'
+
+    function fillHeart() {
+        event.target.onclick = function () {
+            count++;
+            countClickText.innerHTML = count;
+        }
+
+        if (count % 2 === 0) {
+            likeButton.src = 'img/empty-heart.png'
+        } else {
+                    likeButton.src = 'img/filled-heart.png';
+        }
+
+        console.log(count)
+    
+    }
+
+
+    
+
+    likeButton.addEventListener('click', 
+    function (event) {
+    fillHeart();
+
+});
 }
+/* btn.addEventListener('click',
+
+    function(event){
+        //firstProduct.style.backgroundColor = 'lightpink';
+
+        // Toggle
+        firstProduct.classList.toggle('bg-yellow');
+        firstProduct.classList.toggle('text-large');
+    }
+
+);
+ */
+
+
+
+
+
+
+
 
 
 
@@ -328,5 +369,4 @@ function changeBackgroundColor() {
         productsBackground[i].style.backgroundColor = colors[i];
      }
 } */
-//////////////////
-
+/////////////////
