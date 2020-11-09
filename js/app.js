@@ -347,26 +347,5 @@ cartText.setAttribute('class', 'cart-text-remove');
 
 let removeCart = document.querySelector('.cart-text-remove')
 
-removeCart.remove();
-
 }
 
-//////////////////// Den här var bra!
-
-/* let greyColor = '(rgb(72, 72, 74))';48484a
-let redColor = '(rgb(168, 43, 36))';a82b24
-let blueColor = '(rgb(43, 82, 127))'; #2b527f */
-
-// Selects the background of the products
-/* let productsBackground = document.querySelectorAll('article figure');
-
-// Array with hex-colors of grey, red and blue
-let colors = ['#48484aa8', '#a82b24af', ' #2b527fad']
-
-// Function that loops the colors-array
-function changeBackgroundColor() {
-    for (let i = 0; i < productsBackground.length; i++) {
-        productsBackground[i].style.backgroundColor = colors[i];
-     }
-} */
-/////////////////
