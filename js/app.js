@@ -249,6 +249,16 @@ function changeImgToFaded() {
 // Adding a heart after 
 
 
+function addHeart() {
+    let cartIcon = document.querySelector('nav img');
+    let heartIcon = document.createElement('img');
+    heartIcon.src = 'img/empty-heart.png';
+    heartIcon.style.height = '1.75rem';
+    cartIcon.insertAdjacentElement('beforebegin', heartIcon);
+
+}
+addHeart();
+
 
 
 // Creating variable for the h2 in article
@@ -272,18 +282,57 @@ for (let i = 0; i < productName.length; i++) {
             count++;
             countClickText.innerHTML = count;
         }
+
         if (count % 2 === 0) {
             likeButton.src = 'img/empty-heart.png'
         } else {
                     likeButton.src = 'img/filled-heart.png';
         }
+
+        console.log(count)
+    
     }
+
+
+    
+
     likeButton.addEventListener('click', 
     function (event) {
     fillHeart();
 
 });
 }
+
+
+
+/* btn.addEventListener('click',
+
+    function(event){
+        //firstProduct.style.backgroundColor = 'lightpink';
+
+        // Toggle
+        firstProduct.classList.toggle('bg-yellow');
+        firstProduct.classList.toggle('text-large');
+    }
+
+);
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -296,6 +345,7 @@ function changeImgToDefault() {
     blueHoodie.src = 'img/hoodie-ocean.png';
 }
 
+
 let productBtns = document.querySelectorAll('article button');
 for (let blackBtns of productBtns) {
 blackBtns.style.backgroundColor = '#000';
@@ -305,13 +355,35 @@ blackBtns.style.fontSize = '0.8333rem';
 blackBtns.style.transform = 'none'
 }
 
+
+
+// Removes the green cart-element
 function removeCart() {
 let cartText = document.createElement('a')
 cartText.setAttribute('class', 'cart-text-remove');
 
 let removeCart = document.querySelector('.cart-text-remove')
 
-count = 0;
+removeCart.remove();
 
 }
 
+//////////////////// Den här var bra!
+
+/* let greyColor = '(rgb(72, 72, 74))';48484a
+let redColor = '(rgb(168, 43, 36))';a82b24
+let blueColor = '(rgb(43, 82, 127))'; #2b527f */
+
+// Selects the background of the products
+/* let productsBackground = document.querySelectorAll('article figure');
+
+// Array with hex-colors of grey, red and blue
+let colors = ['#48484aa8', '#a82b24af', ' #2b527fad']
+
+// Function that loops the colors-array
+function changeBackgroundColor() {
+    for (let i = 0; i < productsBackground.length; i++) {
+        productsBackground[i].style.backgroundColor = colors[i];
+     }
+} */
+/////////////////
