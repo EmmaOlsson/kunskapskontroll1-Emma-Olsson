@@ -272,54 +272,18 @@ for (let i = 0; i < productName.length; i++) {
             count++;
             countClickText.innerHTML = count;
         }
-
         if (count % 2 === 0) {
             likeButton.src = 'img/empty-heart.png'
         } else {
                     likeButton.src = 'img/filled-heart.png';
         }
-
-        console.log(count)
-    
     }
-
-
-    
-
     likeButton.addEventListener('click', 
     function (event) {
     fillHeart();
 
 });
 }
-/* btn.addEventListener('click',
-
-    function(event){
-        //firstProduct.style.backgroundColor = 'lightpink';
-
-        // Toggle
-        firstProduct.classList.toggle('bg-yellow');
-        firstProduct.classList.toggle('text-large');
-    }
-
-);
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -346,6 +310,8 @@ let cartText = document.createElement('a')
 cartText.setAttribute('class', 'cart-text-remove');
 
 let removeCart = document.querySelector('.cart-text-remove')
+
+count = 0;
 
 }
 
