@@ -116,6 +116,7 @@ main article button, footer button {
     padding: 1rem 1.5rem;
     width: 12rem;
     border-radius: .25rem;
+    text-transform: uppercase;
 }
 
 footer {
@@ -140,4 +141,16 @@ footer > section article {
 footer > section article a {
     margin: .25rem 0;
 }
+
+#cart-text {
+    color: #fff;
+    font-weight: 500;
+    text-transform: uppercase;
+    background-color:#72b584;
+    padding: .8rem;
+    margin-left: 2rem;
+    border-radius: .4rem;
+    cursor: alias;
+}
+
 

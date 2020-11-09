@@ -1,21 +1,26 @@
 /* 
 1. En knapp som återställer allt till originalutseendet
-- Japp
+- Knapp längst ner
 2. Alla ändringar som du har gjort ska ändras tillbaka
-
 3. Byt ut minst ett foto
-
+    -Byter ut soldout till hoodie-ocean som jag dragit ner opacitet på i photshop
 4. Ändra bakgrundsfärg på minst ett element
-- Ändrat tre
+- Ändra bakgrundsfärg för produkterna
 5. Ändra text på minst ett element
-- Ändrat tre
+- Ändrat text på buy-knappar
 6. Ändra färg på minst en knapp
-- Ändrat tre
+- Ändrat färg beroende på added eller sold out
 7. Ta bort minst 1 element (Måste läggas till igen när man trycker på återställningsknappen)
 8. Lägg till en lista var du vill med synlig border för varje li element 
--   Jag ska skapa en lista där ändringarna dyker upp
+-   
 (Måste tas bort när man trycker på återställningsknappen) 
 */
+
+
+let html =document.querySelector('html')
+
+console.log(html)
+
 
 /////////////////
 //* VARIABLES *//
@@ -27,14 +32,11 @@ let btns = document.querySelectorAll('button');
 // Creating variable for all products
 let products = document.querySelectorAll('article figure');
 
-// Creating variable for all a-tags
-let menuElements = document.querySelectorAll('a');
 
-// Creating variable for cart text
-let cartText = menuElements[3];
+// Creating a variable for a new a-element
+let cartText = document.createElement('a')
+cartText.setAttribute('class', 'cart-text-remove');
 
-// Creating variable for cart
-let cart = document.querySelector('#header-navigation img')
 
 
 
@@ -97,15 +99,12 @@ function resetAll(){
     blackBtns.style.transform = 'none'
     }
 
+    // Sets the product image to default
+    changeImgToDefault();
+
     // Removes cart text
-    let menu = document.querySelectorAll('a')
-    let menuChildren = menu.children;
-    menuChildren.removeElement(menuChildren[3])
-
-    ///////// FEL
-    
+    removeCart();
 }
-
 
 ////////////////////
 //* FIRST BUTTON *//
@@ -116,11 +115,23 @@ let firstBtn = btns[0];
 
 firstBtn.addEventListener('click', 
     function(event){
-        changeTextToAdded();
         addToCartText();
+        countClick();
         products[0].style.backgroundColor = '#72b584';
     }
 );
+
+firstBtn.addEventListener('mouseover',
+    function(event) {
+        changeToAddToCart();
+    }
+)
+
+firstBtn.addEventListener('mouseleave',
+    function(event) {
+        defaultBlackButton();
+    }
+)
 
 /////////////////////
 //* SECOND BUTTON *//
@@ -128,13 +139,33 @@ firstBtn.addEventListener('click',
 
 let secondBtn = btns[1];
 
-secondBtn.addEventListener('mouseover', 
+secondBtn.addEventListener('click', 
     function(event){
-        changeTextToSoldOut();
-        changeBtnToRed();
-        products[1].style.backgroundColor = '#a82b24af';
+        addToCartText();
+        countClick();
+        products[1].style.backgroundColor = '#72b584';
     }
 );
+
+secondBtn.addEventListener('mouseover',
+    function(event) {
+        changeToAddToCart();
+    }
+)
+
+secondBtn.addEventListener('mouseleave',
+    function(event) {
+        defaultBlackButton();
+    }
+)
+
+
+/* secondBtn.addEventListener('mouseover', 
+    function(event){
+        changeToSoldOut();
+        products[1].style.backgroundColor = '#a82b24af';
+    }
+); */
 
 ////////////////////
 //* THIRD BUTTON *//
@@ -144,8 +175,8 @@ let thirdBtn = btns[2];
 
 thirdBtn.addEventListener('mouseover', 
     function(event){
-        changeTextToSoldOut();
-        changeBtnToRed();
+        changeToSoldOut();
+        changeImgToFaded();
         products[2].style.backgroundColor = '#a82b24af';
     }
 );
@@ -156,40 +187,128 @@ thirdBtn.addEventListener('mouseover',
 /////////////////
 
 
-function changeTextToSoldOut(){
+function changeToSoldOut(){
     event.target.innerText = 'sold out';
     event.target.style.textTransform = 'uppercase'
     event.target.style.fontSize = '1rem';
     event.target.style.transform = 'rotate(-8deg)'
-}
-
-function changeBtnToRed(){
     event.target.style.backgroundColor = '#c93f26';
 }
 
-function changeTextToAdded(){
-    event.target.innerText = 'added to cart!';
+
+function changeToAddToCart(){
+    event.target.style.backgroundColor = '#72b584';
+    event.target.innerText = 'Add to cart';
     event.target.style.textTransform = 'uppercase'
     event.target.style.fontSize = '1rem';
-    event.target.style.backgroundColor = '#72b584';
 }
 
+
+
+// When clicking on 'Add to cart', text box shows up next to cart icon and count items added
 function addToCartText() {
-    let cartText = document.createElement('a')
+    let itemText = '';
+    if (count <= 1) {
+        itemText = 'item';
+    } else {
+        itemText = 'items';
+    }
+
     cartText.href = '#';
-    cartText.innerText = 'One item added to cart';
-    cartText.style.color = '#fff';
-    cartText.style.fontWeight = '600';
-    cartText.style.textTransform = 'uppercase';
-    cartText.style.backgroundColor = '#72b584';
-    cartText.style.padding = '.8rem';
-    cartText.style.marginLeft = '2rem';
-    cartText.style.borderRadius = '.4rem'
+    cartText.innerText = `[ ${count} ] ${itemText} added to cart`;
+    
     cartText.setAttribute('id', 'cart-text')
+    let menuElements = document.querySelectorAll('a');
     menuElements[2].insertAdjacentElement('beforeend', cartText)
 }
 
+// count-click function 
+let count = 1;
+let countClickText = document.createElement('a');
+function countClick() {
+    event.target.onclick = function () {
+        count++;
+        countClickText.innerHTML = count;
+    }
 
+}
+
+
+function defaultBlackButton() {
+    event.target.style.backgroundColor = '#222';
+    event.target.innerText = 'Buy';
+
+}
+
+function changeImgToFaded() {
+    let blueHoodie = document.querySelector('.art-3 figure img')
+    blueHoodie.src = 'img/hoodie-ocean-faded.png'
+}
+
+
+// Adding a heart after 
+
+
+
+
+// Creating variable for the h2 in article
+let productName = document.querySelectorAll('article h2');
+
+for (let i = 0; i < productName.length; i++) {
+
+    let emptyHeart = document.createElement('img');
+ 
+    productName[i].insertAdjacentElement('beforeend', emptyHeart)
+
+    emptyHeart.src = 'img/empty-heart.png';
+    emptyHeart.style.height = '2rem'
+    emptyHeart.style.width = '2rem'
+    emptyHeart.style.marginLeft = '5rem';
+    emptyHeart.style.marginTop = '.4rem';
+}
+
+function fillHeart () {
+    emptyHeart.src = 'img'
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* default functions */
+
+function changeImgToDefault() {
+    let blueHoodie = document.querySelector('.art-3 figure img')
+    blueHoodie.src = 'img/hoodie-ocean.png';
+}
+
+let productBtns = document.querySelectorAll('article button');
+for (let blackBtns of productBtns) {
+blackBtns.style.backgroundColor = '#000';
+blackBtns.innerText = 'buy';
+blackBtns.style.textTransform = 'none'
+blackBtns.style.fontSize = '0.8333rem';
+blackBtns.style.transform = 'none'
+}
+
+function removeCart() {
+let cartText = document.createElement('a')
+cartText.setAttribute('class', 'cart-text-remove');
+
+let removeCart = document.querySelector('.cart-text-remove')
+
+removeCart.remove();
+
+}
 
 //////////////////// Den här var bra!
 
