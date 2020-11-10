@@ -29,3 +29,6 @@
 
 7. PRODUCT-LIST
 - Svep över "Products" i navigationslistan för att se vilka produktkategorier som erbjuds.
+
+ÖVRIGT
+- Om man klickar på "ADD TO CART" mer än en gång ökar antalet items uppe i navigationsfältet.
